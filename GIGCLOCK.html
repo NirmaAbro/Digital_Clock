@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL CLOCK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .box {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(45deg, #08001f, #30197d);
+            color: #fff;
+            position: relative;
+            /* font-size: 40px; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* Ensure child elements don't overflow */
+        }
+
+        .container {
+            width: 800px;
+            height: 180px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* now this container will be in the center of the page */
+        }
+
+        .clock {
+            width: 100%;
+            height: 100%;
+            background: rgba(235, 0, 255, 0.5);
+            /* Semi-transparent background color */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container::before {
+            content: "";
+            width: 180px;
+            height: 180px;
+            background: #f41b75;
+            border-radius: 5px;
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            z-index: -1;
+        }
+
+        .container::after {
+            content: "";
+            width: 180px;
+            height: 180px;
+            background: #419aff;
+            border-radius: 50%;
+            position: absolute;
+            right: -30px;
+            bottom: -50px;
+            z-index: -1;
+        }
+
+        .clock span {
+            font-size: 80px;
+            width: 110px;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+        }
+
+        /* .clock span::after {
+            content: "";
+            position: relative;
+            bottom: -5px;
+            left: 50%;
+            font-size: 16px;
+            transform: translateX(-50%);
+
+
+        }
+        #hrs::after{
+            content: "HOURS";
+            font-size: 16px;
+        }
+        #mnt::after{
+            content: "minutes";
+        } */
+
+        .clock span::after {
+            content: attr(data-label);
+            /*Use the content attribute to set the label */
+            font-size: 16px;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="container">
+            <div class="clock">
+                <span id="hrs" data-label="HOURS">00</span>
+                <span>:</span>
+                <span id="mnt" data-label="MINUTES">00</span>
+                <span>:</span>
+                <span id="scnd" data-label="SECONDS">00</span>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hours = document.getElementById("hrs");
+        let minutes = document.getElementById("mnt");
+        let seconds = document.getElementById("scnd");
+
+        // console.log(mycurenttime);
+
+        setInterval(() => {
+            let currentTime = new Date();
+            hours.innerHTML = (currentTime.getHours() < 10 ? "0" : "") + (currentTime.getHours() % 12 || 12);
+            // hours.innerHTML = (currentTime.getHours()<10 ?"0":"") + currentTime.getHours();
+            minutes.innerHTML = (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes();
+            seconds.innerHTML = (currentTime.getSeconds() < 10 ? "0" : "") + currentTime.getSeconds();
+        }, 1000)
+
+    </script>
+</body>
+
+</html>
